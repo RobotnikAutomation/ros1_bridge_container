@@ -1,0 +1,82 @@
+---
+version: '3.7'
+
+networks:
+    ros:
+        # driver: bridge
+        external: true
+
+services:
+    ros2dds:
+        build: ros2
+
+        # command: "bash -c 'sleep 2 && fastdds discovery -i 0'"
+        command: "/root/dds.sh"
+        
+        hostname: "ros2dds"
+        container_name: "ros2dds"
+        
+        # privileged: true
+        # ports:
+        #     - target: 11811 #puerto interno del container
+        #       published: 11811 #puerto expuesto del container
+        #       protocol: tcp
+        #       mode: host
+
+        networks:
+            - ros
+        
+        # depends_on: 
+        #     - ros2listener
+
+    # ros2listener:
+    #     build: ros2
+
+    #     command: "ros2 run demo_nodes_cpp listener --ros-args --remap __node:=listener_discovery_server"
+    #     environment:
+    #         - "ROS_DISCOVERY_SERVER=ros2dds:11811" #poner la ip del server DDS
+    #     networks:
+    #         - ros
+
+    #     privileged: true
+
+    #     hostname: "ros2listener"
+    #     container_name: "ros2listener"
+
+    #     # depends_on: 
+    #     #     - ros2dds
+
+    # ros2talker:
+    #     build: ros2
+
+    #     command: "ros2 run demo_nodes_cpp talker --ros-args --remap __node:=talker_discovery_server"
+    #     environment:
+    #         - "ROS_DISCOVERY_SERVER=ros2dds:11811" #poner la ip del server DDS
+    #     networks:
+    #         - ros
+
+    #     privileged: true    
+
+    #     hostname: "ros2talker"
+    #     container_name: "ros2talker" 
+
+        # depends_on: 
+        #     - ros2dds
+
+    # ros2listener_fail:
+    #     build: ros2
+
+    #     command: "ros2 run demo_nodes_cpp listener --ros-args --remap __node:=simple_listener"
+    #     # environment:
+    #     #     - "ROS_DISCOVERY_SERVER=ros2dds:11811" #poner la ip del ros-master (ROS1)
+    #     networks:
+    #         - ros
+
+    # ros2talker_fail:
+    #     build: ros2
+
+    #     command: "ros2 run demo_nodes_cpp talker --ros-args --remap __node:=simple_talker"
+    #     # environment:
+    #     #     - "ROS_DISCOVERY_SERVER=ros2dds:11811" #poner la ip del ros-master (ROS1)
+    #     networks:
+    #         - ros

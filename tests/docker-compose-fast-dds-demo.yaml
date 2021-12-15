@@ -1,0 +1,14 @@
+---
+version: '3.7'
+
+networks:
+    ros:
+        driver: bridge
+
+services:
+    ros2dds:
+        build: ros2
+
+        command: sleep infinity
+        networks:
+            - ros

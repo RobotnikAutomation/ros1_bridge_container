@@ -1,0 +1,16 @@
+---
+version: '3.7'
+
+networks:
+    ros:
+        external: true
+
+services:    
+    ros2listener_fail:
+        build: ros2
+
+        command: "ros2 run demo_nodes_cpp listener --ros-args --remap __node:=simple_listener"
+        # environment:
+        #     - "ROS_DISCOVERY_SERVER=ros2dds:11811" #poner la ip del ros-master (ROS1)
+        networks:
+            - ros

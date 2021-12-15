@@ -1,0 +1,26 @@
+---
+version: '3.7'
+
+networks:
+    ros:
+        # driver: bridge
+        overlay: true
+
+
+services:
+    ros2dds:
+        build: ros2
+
+        # command: "fastdds discovery -i 0"
+        command: sleep infinity
+        ports:
+            - 7400:7400
+            - 7401:7401
+            - 11811:11811
+        expose:
+            - "7400"
+            - "7401"
+            - "11811"
+        # network_mode: host
+        networks:
+            - ros
